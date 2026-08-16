@@ -14,7 +14,7 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'http://localhost:8000',
+        target: 'https://resumeai-pro-df3t.onrender.com',
         changeOrigin: true,
         secure: false,
       }
