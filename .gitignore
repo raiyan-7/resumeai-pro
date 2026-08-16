@@ -1,0 +1,45 @@
+# Environment configuration files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+
+# User upload directories containing resumes
+backend/uploads/
+
+# Dependency directories
+node_modules/
+backend/.venv/
+venv/
+ENV/
+env/
+
+# Python Cache & compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+
+# Production builds
+dist/
+build/
+out/
+
+# IDE and OS files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+.DS_Store
+Thumbs.db
