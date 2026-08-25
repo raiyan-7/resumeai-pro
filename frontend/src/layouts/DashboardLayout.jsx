@@ -13,7 +13,7 @@ export const DashboardLayout = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-dark-950">
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-dark-950">
         <LoadingState text="Verifying session details..." />
       </div>
     );
@@ -25,7 +25,7 @@ export const DashboardLayout = () => {
   }
 
   return (
-    <div className="min-h-screen flex bg-dark-950 text-slate-100">
+    <div className="min-h-screen flex bg-slate-50 dark:bg-dark-950 text-slate-900 dark:text-slate-100">
       {/* Sidebar */}
       <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
 

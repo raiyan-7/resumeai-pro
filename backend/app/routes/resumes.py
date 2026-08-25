@@ -17,7 +17,10 @@ from app.services.notification import create_notification, notify_admins
 
 router = APIRouter(prefix="/resumes", tags=["Resumes"])
 
-UPLOAD_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "uploads")
+if os.environ.get("VERCEL") == "1":
+    UPLOAD_DIR = "/tmp/uploads"
+else:
+    UPLOAD_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "uploads")
 storage_service = StorageService(upload_dir=UPLOAD_DIR)
 
 @router.post("/upload", response_model=ResumeDetailResponse, status_code=status.HTTP_201_CREATED)

@@ -16,7 +16,7 @@ export const Input = ({
   return (
     <div className={`flex flex-col gap-1.5 w-full ${className}`}>
       {label && (
-        <label htmlFor={name} className="text-xs font-medium text-slate-300">
+        <label htmlFor={name} className="text-xs font-medium text-slate-700 dark:text-slate-300">
           {label} {required && <span className="text-rose-500">*</span>}
         </label>
       )}
@@ -35,10 +35,10 @@ export const Input = ({
           placeholder={placeholder}
           disabled={disabled}
           required={required}
-          className={`w-full px-4 py-3 bg-slate-900/60 border rounded-xl text-slate-100 text-sm placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 focus:border-brand-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 ${
+          className={`w-full px-4 py-3 bg-white dark:bg-slate-900/60 border rounded-xl text-slate-900 dark:text-slate-100 text-sm placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 focus:border-brand-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 ${
             Icon ? 'pl-11' : ''
           } ${
-            error ? 'border-rose-500/80 focus:ring-rose-500' : 'border-slate-800/80 focus:border-brand-500'
+            error ? 'border-rose-500 focus:ring-rose-500' : 'border-slate-200 dark:border-slate-800/80 focus:border-brand-500'
           }`}
         />
       </div>

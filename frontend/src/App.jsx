@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 // Providers
@@ -31,6 +31,16 @@ import AdminAnalytics from './pages/AdminAnalytics';
 import { ROUTES } from './utils/constants';
 
 function App() {
+  useEffect(() => {
+    // Determine active theme
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    if (savedTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, []);
+
   return (
     <BrowserRouter>
       <AuthProvider>

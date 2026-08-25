@@ -3,41 +3,44 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    @apply antialiased transition-colors duration-200;
+  }
+
   body {
-    @apply bg-dark-950 text-slate-100 min-h-screen;
-    background-image: 
-      radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
-      radial-gradient(at 100% 100%, rgba(20, 184, 166, 0.06) 0px, transparent 50%);
+    @apply bg-slate-50 text-slate-900 min-h-screen font-sans;
+  }
+
+  .dark body {
+    @apply bg-dark-950 text-slate-100;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-semibold tracking-tight;
+    @apply font-display font-semibold tracking-tight text-slate-900 dark:text-white;
   }
 }
 
 @layer components {
-  /* Premium Glassmorphic card styling */
+  /* Clean, professional SaaS card styling */
   .glass-card {
-    @apply bg-slate-900/50 backdrop-blur-md border border-slate-800/80 rounded-2xl shadow-xl transition-all duration-300;
+    @apply bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 rounded-xl shadow-sm transition-all duration-300;
   }
   
   .glass-card-hover {
-    @apply hover:border-slate-700/80 hover:bg-slate-900/70 hover:shadow-2xl hover:shadow-brand-500/5;
+    @apply hover:border-slate-300 dark:hover:border-slate-700/80 hover:shadow-md;
   }
   
-  /* Text gradient effects */
+  /* Text styling - keeping class names identical to avoid breaking components, but overhauling styling to be clean/professional */
   .text-glow-teal {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-emerald-400 font-bold;
-    filter: drop-shadow(0 0 10px rgba(20, 184, 166, 0.15));
+    @apply text-brand-600 dark:text-brand-500 font-bold;
   }
 
   .text-glow-indigo {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400 font-bold;
-    filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.15));
+    @apply text-accent-600 dark:text-accent-500 font-bold;
   }
   
   .text-glow-multi {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-teal-400 via-indigo-400 to-purple-500 font-bold;
+    @apply text-accent-600 dark:text-brand-500 font-bold;
   }
 }
 
@@ -48,9 +51,9 @@
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-dark-950;
+  @apply bg-slate-100 dark:bg-dark-950;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-slate-800 rounded-full border border-dark-950 hover:bg-slate-700 transition-colors;
+  @apply bg-slate-300 dark:bg-slate-800 rounded-full border border-slate-100 dark:border-dark-950 hover:bg-slate-400 dark:hover:bg-slate-700 transition-colors;
 }
