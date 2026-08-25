@@ -27,13 +27,15 @@ try:
 except Exception as e:
     logger.error(f"Failed to initialize database tables: {str(e)}")
 
+api_prefix = "" if os.environ.get("VERCEL") == "1" else "/api"
+
 app = FastAPI(
     title=settings.PROJECT_NAME,
     description="Backend API foundation for ResumeAI Pro - AI-Powered Resume Analyzer & Interview Coach",
     version="1.0.0",
-    docs_url="/api/docs",
-    redoc_url="/api/redoc",
-    openapi_url="/api/openapi.json"
+    docs_url=f"{api_prefix}/docs",
+    redoc_url=f"{api_prefix}/redoc",
+    openapi_url=f"{api_prefix}/openapi.json"
 )
 
 # CORS configuration loaded from environment variables
@@ -59,14 +61,14 @@ async def global_exception_handler(request: Request, exc: Exception):
     )
 
 # Register routers
-app.include_router(auth.router, prefix="/api")
-app.include_router(resumes.router, prefix="/api")
-app.include_router(job_matches.router, prefix="/api")
-app.include_router(interviews.router, prefix="/api")
-app.include_router(admin.router, prefix="/api")
-app.include_router(notifications.router, prefix="/api")
+app.include_router(auth.router, prefix=api_prefix)
+app.include_router(resumes.router, prefix=api_prefix)
+app.include_router(job_matches.router, prefix=api_prefix)
+app.include_router(interviews.router, prefix=api_prefix)
+app.include_router(admin.router, prefix=api_prefix)
+app.include_router(notifications.router, prefix=api_prefix)
 
-@app.get("/api/health")
+@app.get(f"{api_prefix}/health")
 def health_check():
     return {
         "status": "healthy",
