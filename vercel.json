@@ -11,5 +11,11 @@
       "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
-  ]
+  ],
+  "functions": {
+    "api/index.py": {
+      "maxDuration": 15,
+      "includeFiles": "backend/app/**"
+    }
+  }
 }
