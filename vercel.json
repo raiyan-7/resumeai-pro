@@ -12,7 +12,8 @@
   ],
   "functions": {
     "api/index.py": {
-      "maxDuration": 15
+      "maxDuration": 15,
+      "includeFiles": "backend/app/**"
     }
   }
 }
