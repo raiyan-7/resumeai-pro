@@ -1,5 +1,4 @@
 import re
-import spacy
 import logging
 from typing import Dict, Any, List
 
@@ -14,6 +13,7 @@ def get_nlp():
     """
     global _nlp
     if _nlp is None:
+        import spacy
         model_name = "en_core_web_sm"
         try:
             _nlp = spacy.load(model_name)

@@ -1,4 +1,3 @@
-import fitz  # PyMuPDF
 import os
 import logging
 from typing import Dict, Any
@@ -11,6 +10,7 @@ class ParserService:
         """
         Extracts text content and structured metadata from a PDF file using PyMuPDF.
         """
+        import fitz  # PyMuPDF
         if not os.path.exists(file_path):
             logger.error(f"Parser failed: file not found at {file_path}")
             raise FileNotFoundError(f"PDF file not found at: {file_path}")

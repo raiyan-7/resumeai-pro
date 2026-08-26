@@ -1,7 +1,5 @@
 import re
 from typing import Dict, Any, List
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 
 def match_resume_to_job(
     resume_text: str,
@@ -14,6 +12,8 @@ def match_resume_to_job(
     Calculates semantic cosine similarity using TF-IDF and computes overlap
     between resume skills and job requirements.
     """
+    from sklearn.feature_extraction.text import TfidfVectorizer
+    from sklearn.metrics.pairwise import cosine_similarity
     job_desc_lower = job_description.lower()
     
     # Comprehensive keyword vocabulary for matching
