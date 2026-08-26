@@ -9,12 +9,16 @@ try:
 
     from app.main import app
 except Exception as e:
-    async def app(scope, receive, send):
-        assert scope['type'] == 'http'
+    def app(environ, start_response):
+        status = '500 Internal Server Error'
+        response_headers = [('Content-type', 'text/plain; charset=utf-8')]
+        start_response(status, response_headers)
+        
         error_msg = f"Failed to initialize FastAPI app:\n"
         error_msg += f"Exception: {str(e)}\n\n"
         error_msg += f"Traceback:\n{traceback.format_exc()}\n"
         error_msg += f"sys.path: {sys.path}\n"
+        error_msg += f"Current Dir: {os.getcwd()}\n"
         error_msg += f"Current Dir files: {os.listdir(os.getcwd())}\n"
         parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         error_msg += f"Parent Dir files: {os.listdir(parent_dir) if os.path.exists(parent_dir) else 'not found'}\n"
@@ -23,17 +27,4 @@ except Exception as e:
         else:
             error_msg += f"Backend path is not defined or does not exist!\n"
         
-        body = error_msg.encode('utf-8')
-        
-        await send({
-            'type': 'http.response.start',
-            'status': 500,
-            'headers': [
-                (b'content-type', b'text/plain; charset=utf-8'),
-                (b'content-length', str(len(body)).encode('utf-8')),
-            ]
-        })
-        await send({
-            'type': 'http.response.body',
-            'body': body,
-        })
+        return [error_msg.encode('utf-8')]
