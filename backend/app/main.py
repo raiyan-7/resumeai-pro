@@ -13,7 +13,7 @@ import logging
 from app.config import settings
 from app.database.base import Base
 from app.database.session import engine
-# from app.routes import auth, resumes, job_matches, interviews, admin, notifications
+from app.routes import auth, resumes, job_matches, interviews, admin, notifications
 from app.utilities.logger import setup_logger
 
 # Set up logging configuration
@@ -74,12 +74,12 @@ async def global_exception_handler(request: Request, exc: Exception):
     )
 
 # Register routers
-# app.include_router(auth.router, prefix="/api")
-# app.include_router(resumes.router, prefix="/api")
-# app.include_router(job_matches.router, prefix="/api")
-# app.include_router(interviews.router, prefix="/api")
-# app.include_router(admin.router, prefix="/api")
-# app.include_router(notifications.router, prefix="/api")
+app.include_router(auth.router, prefix="/api")
+app.include_router(resumes.router, prefix="/api")
+app.include_router(job_matches.router, prefix="/api")
+app.include_router(interviews.router, prefix="/api")
+app.include_router(admin.router, prefix="/api")
+app.include_router(notifications.router, prefix="/api")
 
 @app.get("/api/health")
 def health_check(request: Request):
