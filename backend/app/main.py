@@ -27,15 +27,13 @@ try:
 except Exception as e:
     logger.error(f"Failed to initialize database tables: {str(e)}")
 
-api_prefix = "" if os.environ.get("VERCEL") == "1" else "/api"
-
 app = FastAPI(
     title=settings.PROJECT_NAME,
     description="Backend API foundation for ResumeAI Pro - AI-Powered Resume Analyzer & Interview Coach",
     version="1.0.0",
-    docs_url=f"{api_prefix}/docs",
-    redoc_url=f"{api_prefix}/redoc",
-    openapi_url=f"{api_prefix}/openapi.json"
+    docs_url="/api/docs",
+    redoc_url="/api/redoc",
+    openapi_url="/api/openapi.json"
 )
 
 # CORS configuration loaded from environment variables
@@ -49,6 +47,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Vercel path normalization middleware
+@app.middleware("http")
+async def normalize_api_path(request: Request, call_next):
+    path = request.url.path
+    # If request is routed to serverless function and prefix is stripped, prepend /api
+    if os.environ.get("VERCEL") == "1" and not path.startswith("/api") and path != "/":
+        request.scope["path"] = f"/api{path}"
+        if "raw_path" in request.scope:
+            raw_path_str = request.scope["raw_path"].decode("utf-8")
+            request.scope["raw_path"] = f"/api{raw_path_str}".encode("utf-8")
+    
+    response = await call_next(request)
+    return response
+
 # Exception handlers
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
@@ -61,17 +73,20 @@ async def global_exception_handler(request: Request, exc: Exception):
     )
 
 # Register routers
-app.include_router(auth.router, prefix=api_prefix)
-app.include_router(resumes.router, prefix=api_prefix)
-app.include_router(job_matches.router, prefix=api_prefix)
-app.include_router(interviews.router, prefix=api_prefix)
-app.include_router(admin.router, prefix=api_prefix)
-app.include_router(notifications.router, prefix=api_prefix)
+app.include_router(auth.router, prefix="/api")
+app.include_router(resumes.router, prefix="/api")
+app.include_router(job_matches.router, prefix="/api")
+app.include_router(interviews.router, prefix="/api")
+app.include_router(admin.router, prefix="/api")
+app.include_router(notifications.router, prefix="/api")
 
-@app.get(f"{api_prefix}/health")
-def health_check():
+@app.get("/api/health")
+def health_check(request: Request):
     return {
         "status": "healthy",
         "project": settings.PROJECT_NAME,
-        "database": "connected"
+        "database": "connected",
+        "path": request.url.path,
+        "headers": dict(request.headers),
+        "vercel": os.environ.get("VERCEL", "0")
     }
