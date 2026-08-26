@@ -42,4 +42,6 @@ out/
 *.sln
 *.swp
 .DS_Store
+# Ignored vendor packages inside api/
+api/*/
 Thumbs.db

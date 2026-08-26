@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "build": "cd frontend && npm install && npm run build && cd .. && node copy-dist.js"
+    "build": "cd frontend && npm install && npm run build && cd .. && node copy-dist.js && (pip3 install -r api/requirements.txt --target api/ || python3 -m pip install -r api/requirements.txt --target api/)"
   },
   "devDependencies": {
     "vite": "^5.0.0"
