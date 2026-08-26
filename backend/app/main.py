@@ -20,12 +20,13 @@ from app.utilities.logger import setup_logger
 setup_logger()
 logger = logging.getLogger("app.main")
 
-# Auto-create SQLite database tables on startup
-try:
-    Base.metadata.create_all(bind=engine)
-    logger.info("Successfully connected to database and initialized schema.")
-except Exception as e:
-    logger.error(f"Failed to initialize database tables: {str(e)}")
+# Auto-create database tables on startup (skipped under serverless Vercel runtime to avoid connection timeout blocking)
+if os.environ.get("VERCEL") != "1":
+    try:
+        Base.metadata.create_all(bind=engine)
+        logger.info("Successfully connected to database and initialized schema.")
+    except Exception as e:
+        logger.error(f"Failed to initialize database tables: {str(e)}")
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
