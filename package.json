@@ -4,5 +4,8 @@
   "version": "1.0.0",
   "scripts": {
     "build": "cd frontend && npm install && npm run build && cd .. && node copy-dist.js"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
   }
 }
